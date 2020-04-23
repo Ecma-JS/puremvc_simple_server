@@ -1,7 +1,10 @@
 let puremvc = require("puremvc");
 let service = require("../index");
 
-service.view.ServiceMediator = require("../View/ServiceMediator");
+// service.controller.ServiceCommand = require("./ServiceCommand");
+// service.model.ServiceProxy = require("../model/ServiceProxy");
+// service.model.request.ServiceRequest = require("../model/request/ServiceRequest");
+service.view.ServiceProxy = require("../Model/Server");
 
 function StartupCommand() {
     puremvc.SimpleCommand.call(this);
@@ -12,7 +15,7 @@ StartupCommand.prototype.constructor = StartupCommand;
 
 StartupCommand.prototype.execute = function(notification) {
 
-    this.facade.registerMediator(new service.view.ServiceMediator(notification.body));
+    this.facade.registerProxy(new service.model.ServiceProxy(notification.body));
 
 };
 

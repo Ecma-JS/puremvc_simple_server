@@ -1,5 +1,5 @@
-let puremvc = require("puremvc");
-let service = require("./index");
+const puremvc = require("puremvc");
+const service = require("./index");
 
 service.controller.StartupCommand = require("./Controller/StartupComand");
 
