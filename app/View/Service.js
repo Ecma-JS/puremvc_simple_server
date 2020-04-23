@@ -7,7 +7,6 @@ Service.prototype.createServer = function() {
 
         response.setHeader("Access-Control-Allow-Origin", "*");
         response.setHeader("Access-Control-Allow-Headers", "Origin, Content-Type, Accept");
-        response.setHeader("Access-Control-Allow-Methods", "OPTIONS, GET, POST, PUT, DELETE");
         response.end('Hello Node.js Server!');
     }).listen(5000, function(error){
         console.log(error ? error : "Server running at PORT:" + (5000));
