@@ -1,11 +1,11 @@
 let service = {
-    controller: {},
-    model: {
-        request: {}
-    },
-    view: {
-        components: {}
-    }
+	controller: {},
+	model: {
+		request: {}
+	},
+	view: {
+		components: {}
+	}
 };
 
 module.exports = service;
