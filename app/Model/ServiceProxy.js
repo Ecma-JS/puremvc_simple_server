@@ -1,20 +1,11 @@
-let puremvc = require("puremvc");
+const puremvc = require("puremvc");
+const ServiceResponse = require("./ServiceResponse");
 
-function ServiceProxy() {
-  puremvc.Proxy.call(this, this.constructor.NAME);
-}
-
-ServiceProxy.prototype = new puremvc.Proxy;
-ServiceProxy.prototype.constructor = ServiceProxy;
+const ServiceProxy = new puremvc.Proxy("serviceProxy");
 
 
-ServiceProxy.prototype.response = function () {
-  return new Promise(function (resolve, reject) {
-    resolve('Hello Node.js Server!');
-  });
-};
+data = ServiceResponse();
 
-
-ServiceProxy.NAME = "ServiceProxy";
+ServiceProxy.setData(data);
 
 module.exports = ServiceProxy;

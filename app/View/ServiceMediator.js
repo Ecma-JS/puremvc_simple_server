@@ -1,41 +1,23 @@
 const puremvc = require("puremvc");
-const service = require("../index");
+const ApplicationFacade = require("../ApplicationFacade")
+const Server = require("./Server")
 
-function ServiceMediator(service) {
-  puremvc.Mediator.call(this, this.constructor.NAME, service);
-}
+const ServiceMediator = new puremvc.Mediator("serviceMediator");
 
-ServiceMediator.prototype = new puremvc.Mediator;
-ServiceMediator.prototype.constructor = ServiceMediator;
+const server = new Server();
+ServiceMediator.setViewComponent(server);
 
-ServiceMediator.prototype.onRegister = function () {
-  const self = this;
-
-  function IService() {
-    this.service = self.service.bind(self);
-  }
-
-  this.viewComponent.setDelegate(new IService());
-  this.viewComponent.createServer();
-};
-
-ServiceMediator.prototype.service = function (request, response, data) {
-  const serviceRequest = new service.model.request.ServiceRequest(request, response, data);
-  this.facade.sendNotification(service.ApplicationFacade.SERVICE, serviceRequest);
-};
-
-ServiceMediator.prototype.listNotificationInterests = function () {
+ServiceMediator.listNotificationInterests = function () {
   return [
-    service.ApplicationFacade.SERVICE_RESULT,
-    service.ApplicationFacade.SERVICE_FAULT
+    "serviceResult",
   ];
 };
 
-ServiceMediator.prototype.handleNotification = function (notification) {
-  const serviceRequest = notification.body;
-  if (notification.getName() === service.ApplicationFacade.SERVICE_RESULT) {
-    this.viewComponent.result(serviceRequest.response, serviceRequest.resultData);
+ServiceMediator.handleNotification = function (notification) {
+  if(notification.getName() === "serviceResult") {
+    const component = ServiceMediator.getViewComponent();
+    component.createServer(notification.body);
   }
-};
+}
 
 module.exports = ServiceMediator;
