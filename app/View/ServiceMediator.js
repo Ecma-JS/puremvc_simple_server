@@ -1,11 +1,25 @@
 const puremvc = require("puremvc");
 const ApplicationFacade = require("../ApplicationFacade")
-const Server = require("./Server")
+const EventEmitter = require("events");
+const http = require("http");
+
 
 const ServiceMediator = new puremvc.Mediator("serviceMediator");
 
-const server = new Server();
-ServiceMediator.setViewComponent(server);
+ServiceMediator.onRegister = function () {
+  const server = http.createServer((request, response) => {
+    let body = [];
+    request.on('error', (err) => {
+      console.error(err);
+    }).on('data', (chunk) => {
+      body.push(chunk);
+    }).on('end', () => {
+      body = Buffer.concat(body).toString();
+      this.facade.controller.StartupCommand.execute(ServiceMediator.facade, body, response)
+    });
+  }).listen(5000); 
+  ServiceMediator.setViewComponent(server);
+}
 
 ServiceMediator.listNotificationInterests = function () {
   return [
@@ -14,9 +28,9 @@ ServiceMediator.listNotificationInterests = function () {
 };
 
 ServiceMediator.handleNotification = function (notification) {
+
   if(notification.getName() === "serviceResult") {
-    const component = ServiceMediator.getViewComponent();
-    component.createServer(notification.body);
+    notification.body.end(this.facade.retrieveProxy("serviceProxy").getData())
   }
 }
 

@@ -1,5 +1,5 @@
 const puremvc = require("puremvc");
-const startupCommand = require("./Controller/StartupComand");
+const startupCommand = require("./Controller/StartupCommand");
 const mediator = require("./View/ServiceMediator");
 const proxy = require("./Model/ServiceProxy");
 
@@ -18,6 +18,3 @@ ApplicationFacade.controller.StartupCommand = startupCommand;
 ApplicationFacade.registerProxy(proxy);
 ApplicationFacade.registerMediator(mediator);
 ApplicationFacade.registerCommand(ApplicationFacade.STARTUP, ApplicationFacade.controller.StartupCommand);
-ApplicationFacade.sendNotification(ApplicationFacade.SERVICE_RESULT, ApplicationFacade.retrieveProxy(ApplicationFacade.PROXY).getData());
-
-module.exports = ApplicationFacade;
