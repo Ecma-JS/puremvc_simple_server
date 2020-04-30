@@ -18,3 +18,4 @@ ApplicationFacade.controller.StartupCommand = startupCommand;
 ApplicationFacade.registerProxy(proxy);
 ApplicationFacade.registerMediator(mediator);
 ApplicationFacade.registerCommand(ApplicationFacade.STARTUP, ApplicationFacade.controller.StartupCommand);
+ApplicationFacade.controller.StartupCommand.execute(ApplicationFacade);
