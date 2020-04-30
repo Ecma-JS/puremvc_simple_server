@@ -36,7 +36,7 @@ ServiceMediator.listNotificationInterests = function () {
 
 ServiceMediator.handleNotification = function (notification) {
   if(notification.getName() === "convert") {
-    this.facade.controller.ConvertBodyCommand.execute(notification);
+    this.facade.controller.ConvertBodyCommand.execute(notification, this.facade);
   }
 
   if(notification.getName() === "serviceResult") {
