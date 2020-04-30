@@ -29,16 +29,11 @@ ServiceMediator.onRegister = function () {
 
 ServiceMediator.listNotificationInterests = function () {
   return [
-    "serviceResult",
-    "convert"
+    "serviceResult"
   ];
 };
 
 ServiceMediator.handleNotification = function (notification) {
-  if(notification.getName() === "convert") {
-    this.facade.controller.ConvertBodyCommand.execute(notification, this.facade);
-  }
-
   if(notification.getName() === "serviceResult") {
     this.emitter.emit(notification.type, notification.body);
   }

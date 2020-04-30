@@ -1,12 +1,13 @@
 const puremvc = require("puremvc");
-const ServiceResponse = require("../Model/ServiceResponse")
 const convertBodyCommand = require("./ConvertBodyCommand")
 
-const StartupCommand = new puremvc.SimpleCommand();
-
-StartupCommand.execute = function(facade) {
-  facade.controller.ConvertBodyCommand = convertBodyCommand;
-  facade.registerCommand("convert", facade.controller.ConvertBodyCommand);
+class StartupCommand extends puremvc.SimpleCommand {
+  
+  execute () {
+    this.facade.controller.ConvertBodyCommand = convertBodyCommand;
+    this.facade.registerCommand("convert", this.facade.controller.ConvertBodyCommand);
+  }
+  
 }
 
 
